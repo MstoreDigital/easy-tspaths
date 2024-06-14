@@ -1,7 +1,11 @@
 export const ensureExtension = ({ filePath }: { filePath: string; }) => {
 	const hasNoExtension = /^[^.]+$/.test(filePath);
-
-	return (filePath.endsWith('.ts') && !filePath.includes('node_modules'))
-		? filePath.replace(/\.ts$/, '.js')
-		: hasNoExtension ? `${filePath}.js` : filePath
+	if (!filePath.includes('node_modules')) {
+		if (filePath.endsWith('.ts')) {
+			return filePath.replace(/\.ts$/, '.js')
+		} else if (hasNoExtension) {
+			return `${filePath}.js`
+		}
+	}
+	return filePath
 }
