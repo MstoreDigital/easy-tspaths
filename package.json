@@ -1,6 +1,6 @@
 {
   "name": "easy-tspaths",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "make all your typescript aliases become relative paths",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.mjs",

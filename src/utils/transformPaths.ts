@@ -35,8 +35,9 @@ export const transformPaths = ({
 			resolvedPath = toOutDirPath({ filePath: resolvedPath, outDir })
 			resolvedPath = ensureExtension({ filePath: resolvedPath })
 			if (existsSync(resolve(process.cwd(), file))) {
+				const relPath = relative(dirname(file), resolvedPath)
 				let filePath = toUnixPath({
-					filePath: relative(dirname(file), resolvedPath)
+					filePath: !relPath.startsWith('.') ? `.\\${relPath}` : relPath
 				})
 				return `require('${filePath}')`
 			}
