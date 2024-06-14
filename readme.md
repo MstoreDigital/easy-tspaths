@@ -2,11 +2,11 @@
 
 easy-tspaths is a lib made by Lucas Christian, this lib was made for make all your typescript aliases become relative paths
 
-## Sumário
+## Summary
 - [Installation](#installation);
 - [Using](#using);
 - [Collaborate](#collaborate);
-- [Errors in sakfjs](#errors-in-sakfjs);
+- [Errors in easy-tspaths](#errors-in-easy-tspaths);
 - [Authors](#authors).
 
 
