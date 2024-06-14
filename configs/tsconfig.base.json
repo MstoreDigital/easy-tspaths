@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "declarationMap": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,                   
+    "skipLibCheck": true,
+    "declaration": true,
+    "rootDir": "../src",
+    "checkJs": true,
+    "strict": true
+  },
+  "include": ["../src"],
+  "exclude": ["../node_modules", "../vite.config.ts", "../src/**/*.test.ts"]
+}

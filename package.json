@@ -1,0 +1,47 @@
+{
+  "name": "easy-tspaths",
+  "version": "1.0.0",
+  "description": "make all your typescript aliases become relative paths",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.mjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MstoreDigital/easy-tspaths.git"
+  },
+  "author": "Lucas Christian <lucas.christian.programmer@gmail.com>",
+  "scripts": {
+    "start": "node lib/esm/index.js",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "clean": "rimraf ./lib"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "rimraf": "^5.0.7",
+    "tsx": "^4.15.4"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.4.5",
+    "zod": "^3.23.8"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/esm/types/index.d.ts",
+        "default": "./lib/esm/index.mjs"
+      },
+      "require": {
+        "types": "./lib/cjs/types/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
+  },
+  "types": "./lib/cjs/types/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ]
+}
