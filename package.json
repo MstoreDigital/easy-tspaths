@@ -1,9 +1,13 @@
 {
   "name": "easy-tspaths",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "make all your typescript aliases become relative paths",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.mjs",
+  "bin": {
+    "easy-tspaths-cjs": "lib/cjs/index.js",
+    "easy-tspaths-esm": "lib/esm/index.mjs"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/MstoreDigital/easy-tspaths.git"
