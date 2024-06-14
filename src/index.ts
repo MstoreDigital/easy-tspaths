@@ -19,7 +19,7 @@ const tsConfigPath = resolve(process.cwd(), options.config);
 
 const start = async () => {
   if (existsSync(tsConfigPath)) {
-    console.log(`\ntsconfig.json found in path: ${tsConfigPath}`);
+    console.log(`\n> [easy-tspaths] tsconfig.json found in path: ${tsConfigPath}`);
     const tsConfig = await import(tsConfigPath) as {
       compilerOptions: {
         outDir: string;
@@ -28,12 +28,12 @@ const start = async () => {
       }
     };
     if (['outDir', 'baseUrl', 'paths'].some(field => !(field in tsConfig.compilerOptions))) {
-      console.log('\nIt is necessary to provide a tsconfig that contains the following fields: "outDir", "baseUrl", "paths"')
+      console.log('\n> [easy-tspaths] It is necessary to provide a tsconfig that contains the following fields: "outDir", "baseUrl", "paths"')
       process.exit(1);
     }
-    console.log('Starting to change paths.')
+    console.log('> [easy-tspaths] Starting to change paths.')
     transformDirectory({ tsConfig })
-    console.log('All paths changed with success!')
+    console.log('> [easy-tspaths] All paths changed with success!')
     process.exit(0)
   } else {
     console.error(`\ntsconfig.json not found in path: ${tsConfigPath}`);

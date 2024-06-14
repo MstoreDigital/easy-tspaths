@@ -1,6 +1,5 @@
-import { readFileSync, writeFileSync } from 'fs'
-import { relative, dirname } from 'path'
-import { createMatchPath } from 'tsconfig-paths'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { relative, dirname, resolve } from 'path'
 import { toOutDirPath } from "./toOutDirPath"
 import { toUnixPath } from "./toUnixPath"
 import { ensureExtension } from './ensureExtension'
@@ -18,18 +17,27 @@ export const transformPaths = ({
     }
   };
 }) => {
-	const { outDir, baseUrl, paths } = tsConfig.compilerOptions
-  const matchPath = createMatchPath(baseUrl, paths)
+	const { outDir, paths } = tsConfig.compilerOptions
 	let content = readFileSync(file, 'utf-8')
 
 	for (const alias in paths) {
 		const aliasPattern = new RegExp(`require\\(['"](${alias.replace('*', '.*')})['"]\\)`, 'g')
 		content = content.replace(aliasPattern, (match, p1) => {
-			const resolvedPath = matchPath(p1, undefined, undefined, ['.js'])
-			if (resolvedPath) {
-				let filePath = toUnixPath({ filePath: relative(dirname(file), resolvedPath) })
-				filePath = toOutDirPath({ filePath, outDir })
-				filePath = ensureExtension({ filePath })
+			let resolvedAlias
+			if (p1.includes('/')) {
+				const prefix = p1.substring(0, p1.lastIndexOf('/'));
+				const suffix = p1.substring(p1.lastIndexOf('/') + 1);
+				resolvedAlias = paths[`${prefix}/*`][0].replace('*', suffix)
+			} else {
+				resolvedAlias = paths[p1 as keyof typeof paths][0]
+			}
+			let resolvedPath = resolve(process.cwd(), resolvedAlias)
+			resolvedPath = toOutDirPath({ filePath: resolvedPath, outDir })
+			resolvedPath = ensureExtension({ filePath: resolvedPath })
+			if (existsSync(resolve(process.cwd(), file))) {
+				let filePath = toUnixPath({
+					filePath: relative(dirname(file), resolvedPath)
+				})
 				return `require('${filePath}')`
 			}
 			return match

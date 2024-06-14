@@ -1,6 +1,6 @@
 {
   "name": "easy-tspaths",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "make all your typescript aliases become relative paths",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.mjs",
@@ -16,7 +16,7 @@
   "author": "Lucas Christian <lucas.christian.programmer@gmail.com>",
   "scripts": {
     "start": "node lib/esm/index.js",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs && node shebang.js",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
     "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
     "clean": "rimraf ./lib"

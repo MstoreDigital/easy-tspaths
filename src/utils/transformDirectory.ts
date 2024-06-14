@@ -13,13 +13,19 @@ export const transformDirectory = ({
     }
   };
 }) => {
-  const directory = tsConfig.compilerOptions.outDir
-	readdirSync(directory).forEach(file => {
-		const fullPath = join(directory, file)
-		if (statSync(fullPath).isDirectory()) {
-			transformDirectory({ tsConfig })
-		} else if (fullPath.endsWith('.js')) {
-			transformPaths({ file, tsConfig })
-		}
-	})
+  const processDirectory = ({ directory }: { directory: string; }) => {
+    const files = readdirSync(directory);
+    
+    files.forEach(file => {
+      const fullPath = join(directory, file);
+      if (statSync(fullPath).isDirectory()) {
+        processDirectory({ directory: fullPath });
+      } else if (fullPath.endsWith('.js')) {
+        console.log(`> [easy-tspaths] Fixing imports of: ${fullPath}`)
+        transformPaths({ file: fullPath, tsConfig });
+      }
+    });
+  };
+
+  processDirectory({ directory: tsConfig.compilerOptions.outDir });
 }
